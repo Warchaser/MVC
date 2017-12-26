@@ -6,6 +6,7 @@
 
   <display-name>MVC</display-name>
 
+  <!--url-pattern为 / ，说明拦截所有请求-->
   <servlet>
     <servlet-name>mvc-dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
