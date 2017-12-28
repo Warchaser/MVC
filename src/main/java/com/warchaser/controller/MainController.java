@@ -15,9 +15,15 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    // 自动装配数据库接口，不需要再写原始的Connection来操作数据库
+    /**
+     * 自动装配数据库接口，不需要再写原始的Connection来操作数据库
+     * */
+    private final UserRepository mUserRepository;
+
     @Autowired
-    UserRepository mUserRepository;
+    public MainController(UserRepository mUserRepository) {
+        this.mUserRepository = mUserRepository;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -36,14 +42,18 @@ public class MainController {
         return "admin/users";
     }
 
-    //get请求, 访问添加用户 页面
+    /**
+     * get请求, 访问添加用户 页面
+     * */
     @RequestMapping(value = "/admin/users/add", method = RequestMethod.GET)
     public String addUser(){
         //转到 admin/addUser.jsp
         return "admin/addUser";
     }
 
-    //post请求, 处理添加用户请求,并重定向到用户管理页面
+    /**
+     * post请求, 处理添加用户请求,并重定向到用户管理页面
+     * */
     @RequestMapping(value = "admin/users/addP", method = RequestMethod.POST)
     public String addUserPost(@ModelAttribute("user") UserEntity userEntity){
         // 注意此处，post请求传递过来的是一个UserEntity对象，里面包含了该用户的信息
@@ -59,9 +69,11 @@ public class MainController {
         return "redirect:/admin/users";
     }
 
-    // 查看用户详情
-    // @PathVariable可以收集url中的变量，需匹配的变量用{}括起来
-    // 例如：访问 localhost:8080/admin/users/show/1 ，将匹配 id = 1
+    /**
+     *查看用户详情
+     *@PathVariable可以收集url中的变量，需匹配的变量用{}括起来
+     *例如：访问 localhost:8080/admin/users/show/1 ，将匹配 id = 1
+     * */
     @RequestMapping(value = "/admin/users/show/{id}", method = RequestMethod.GET)
     public String showUser(@PathVariable("id") Integer userId, ModelMap modelMap){
 
@@ -74,7 +86,9 @@ public class MainController {
         return "admin/userDetail";
     }
 
-    // 更新用户信息 页面
+    /**
+     * 更新用户信息 页面
+     * */
     @RequestMapping(value = "admin/users/update/{id}", method = RequestMethod.GET)
     public String updateUser(@PathVariable("id") Integer userId, ModelMap modelMap){
 
@@ -86,7 +100,9 @@ public class MainController {
         return "admin/updateUser";
     }
 
-    // 更新用户信息 操作
+    /**
+     * 更新用户信息 操作
+     * */
     @RequestMapping(value = "/admin/users/updateP", method = RequestMethod.POST)
     public String updateUserPost(@ModelAttribute("userP") UserEntity userEntity){
 
@@ -100,7 +116,9 @@ public class MainController {
         return "redirect:/admin/users";
     }
 
-    // 删除用户
+    /**
+     * 删除用户
+     * */
     @RequestMapping(value = "/admin/users/delete/{id}", method = RequestMethod.GET)
     public String deleteUser(@PathVariable("id") Integer userId){
 

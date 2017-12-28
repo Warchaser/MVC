@@ -17,11 +17,15 @@ import java.util.List;
 @Controller
 public class BlogController {
 
-    @Autowired
-    BlogRepository mBlogRepository;
+    private final BlogRepository mBlogRepository;
+
+    private final UserRepository mUserRepository;
 
     @Autowired
-    UserRepository mUserRepository;
+    public BlogController(BlogRepository blogRepository, UserRepository userRepository){
+        this.mBlogRepository = blogRepository;
+        this.mUserRepository = userRepository;
+    }
 
     /**
      * 查看所有博文
